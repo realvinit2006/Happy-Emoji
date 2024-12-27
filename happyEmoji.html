@@ -5,37 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HappyEmoji</title>
     <style>
-        #wrapper {
+        #emojiListDiv {
             background-color: #000; 
             color: #fff;
             height: 100%;
-            width: 100%;
+            width: 50%;
             font-size: 32px;
-            display: flex;
             align-items: center;
-            /* flex-direction: column; */
-            justify-content: space-evenly;
         } 
-        .wrap {
-            background-color: #000; 
-            color: #fff;
-            height: 100%;
-            width: 100%;
-            font-size: 32px;
+        .parent {
             display: flex;
-            align-items: center;
-            /* flex-direction: column; */
+            width: 100%;
             justify-content: space-evenly;
+            border: #ddd solid 2px;
+
+        }
+        input {
+            width: 43%;
+            height: 2rem;
+        }
+        button{
+            padding: 10px 16px;
         }
 
     </style>
 </head>
 <body>
-    <div id="wrapper">
-        <div class="emoji"></div>
-        <div class="aliases"></div>
-        <div class="tags"></div>
-    </div>
+        <input type="text" id="input" placeholder="Search your emojis">
+        <button>search</button>
+   <div id="emojiListDiv"></div>
+   <div class="searchresults"></div>
 
 
     <script type="module" src="happyEmoji.js" ></script>

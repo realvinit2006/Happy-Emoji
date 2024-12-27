@@ -1,47 +1,50 @@
-import emojiList from "./happyEmoji_emojiList.js";
+import {emojiList} from "./happyEmoji_emojiList.js";
 
-let wrapper = document.querySelector("#wrapper");
 
-const emojiDiv = document.querySelector(".emoji");
-const aliasesDiv = document.querySelector(".aliases");
-const tagsDiv = document.querySelector(".tags");
+const emojiListDiv = document.querySelector("#emojiListDiv");
+const input = document.querySelector("#input");
 
-function showEmoji(emojiData) {
-  const div = document.createElement("div");
-  div.classList.add("wrap");
-  const emojiElement = document.createElement("div");
-  emojiElement.innerText = emojiData.emoji;
-  emojiDiv.append(emojiElement);
+let searchresults = [...emojiList]; // Initialize with all emojis
 
-  const aliasesElement = document.createElement("p");
-  aliasesElement.innerText = emojiData.aliases;
+// Display the full emoji list on load
+fetchEmoji(searchresults);
 
-  const tagsElement = document.createElement("p");
-  tagsElement.innerText = emojiData.tags;
-  aliasesDiv.append(aliasesElement);
-  tagsDiv.append(tagsElement);
+input.addEventListener("keyup", searchEmoji);
 
-  div.append(emojiDiv, aliasesDiv, tagsDiv);
-  return div;
-}
+function fetchEmoji(list) {
+  emojiListDiv.innerHTML = ""; // Clear the current content
+  list.forEach((obj) => {
+    const parent = document.createElement("div");
+    parent.classList.add("parent");
 
-function displayEmojis() {
-  emojiList.forEach((emojiData) => {
-    const div = showEmoji(emojiData);
+    const emoji = document.createElement("p");
+    emoji.classList.add("emoji");
+    emoji.innerText = obj.emoji;
 
-    wrapper.append(div);
+    const alias = document.createElement("p");
+    alias.classList.add("alias");
+    alias.innerText = obj.aliases.toString();
+
+    const description = document.createElement("p");
+    description.classList.add("description");
+    description.innerText = obj.description;
+
+    parent.append(emoji, alias, description);
+    emojiListDiv.append(parent);
   });
 }
 
-displayEmojis();
+function searchEmoji(e) {
+  if (e.target.value.length > 1) {
+    searchresults = emojiList.filter((obj) =>
+      obj.description.includes(e.target.value)
+    );
+  } else {
+    searchresults = [...emojiList]; // Reset to the full list
+  }
+  fetchEmoji(searchresults); // Re-render with filtered results
+}
 
-// function showData () {
-//     for (let i=0; i<data.length; i++)
-//     {
-//         wrapper.innerHTML = data[i].emoji;
-//         wrapper.classList.add("emoji");
-//         console.log(wrapper);
 
-//     }
-// }
-// showData()
+
+
